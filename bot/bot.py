@@ -123,7 +123,7 @@ async def is_bot_mentioned(update: Update, context: CallbackContext):
          if message.reply_to_message is not None:
              if message.reply_to_message.from_user.id == context.bot.id:
                  return True
-     except:
+     except Exception:
          return True
      else:
          return False
@@ -185,9 +185,9 @@ async def _vision_message_handle_fn(
     user_id = update.message.from_user.id
     current_model = db.get_user_attribute(user_id, "current_model")
 
-    if current_model != "gpt-4-vision-preview" and current_model != "gpt-4o":
+    if not config.models["info"][current_model].get("vision", False):
         await update.message.reply_text(
-            "🥲 Images processing is only available for <b>gpt-4-vision-preview</b> and <b>gpt-4o</b> model. Please change your settings in /settings",
+            "🥲 Image understanding is only available for <b>vision-capable</b> models (e.g. GPT-4o, GPT-4o mini, GPT-5.5 or Claude). Please change your model in /settings",
             parse_mode=ParseMode.HTML,
         )
         return
@@ -329,6 +329,10 @@ async def _vision_message_handle_fn(
         return
 
 async def unsupport_message_handle(update: Update, context: CallbackContext, message=None):
+    # check if bot was mentioned (for group chats)
+    if not await is_bot_mentioned(update, context):
+        return
+
     error_text = f"I don't know how to read files or videos. Send the picture in normal mode (Quick Mode)."
     logger.error(error_text)
     await update.message.reply_text(error_text)
@@ -459,12 +463,12 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
             await update.message.reply_text(text, parse_mode=ParseMode.HTML)
 
     async with user_semaphores[user_id]:
-        if current_model == "gpt-4-vision-preview" or current_model == "gpt-4o" or update.message.photo is not None and len(update.message.photo) > 0:
-
-            logger.error(current_model)
-            # What is this? ^^^
-
-            if current_model != "gpt-4o" and current_model != "gpt-4-vision-preview":
+        model_supports_vision = config.models["info"][current_model].get("vision", False)
+        photo_sent = update.message.photo is not None and len(update.message.photo) > 0
+        if model_supports_vision or photo_sent:
+            if not model_supports_vision:
+                # a photo was sent but the selected model can't read images:
+                # fall back to a vision-capable default
                 current_model = "gpt-4o"
                 db.set_user_attribute(user_id, "current_model", "gpt-4o")
             task = asyncio.create_task(
@@ -473,7 +477,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
         else:
             task = asyncio.create_task(
                 message_handle_fn()
-            )            
+            )
 
         user_tasks[user_id] = task
 
@@ -543,8 +547,8 @@ async def generate_image_handle(update: Update, context: CallbackContext, messag
     message = message or update.message.text
 
     try:
-        image_urls = await openai_utils.generate_images(message, n_images=config.return_n_generated_images, size=config.image_size)
-    except openai.error.InvalidRequestError as e:
+        images = await openai_utils.generate_images(message, n_images=config.return_n_generated_images, size=config.image_size)
+    except openai.BadRequestError as e:
         if str(e).startswith("Your request was rejected as a result of our safety system"):
             text = "🥲 Your request <b>doesn't comply</b> with OpenAI's usage policies.\nWhat did you write there, huh?"
             await update.message.reply_text(text, parse_mode=ParseMode.HTML)
@@ -552,12 +556,12 @@ async def generate_image_handle(update: Update, context: CallbackContext, messag
         else:
             raise
 
-    # token usage
-    db.set_user_attribute(user_id, "n_generated_images", config.return_n_generated_images + db.get_user_attribute(user_id, "n_generated_images"))
+    # usage accounting
+    db.set_user_attribute(user_id, "n_generated_images", len(images) + db.get_user_attribute(user_id, "n_generated_images"))
 
-    for i, image_url in enumerate(image_urls):
+    for image in images:
         await update.message.chat.send_action(action="upload_photo")
-        await update.message.reply_photo(image_url, parse_mode=ParseMode.HTML)
+        await update.message.reply_photo(io.BytesIO(image))
 
 
 async def new_dialog_handle(update: Update, context: CallbackContext):
@@ -566,7 +570,7 @@ async def new_dialog_handle(update: Update, context: CallbackContext):
 
     user_id = update.message.from_user.id
     db.set_user_attribute(user_id, "last_interaction", datetime.now())
-    db.set_user_attribute(user_id, "current_model", "gpt-3.5-turbo")
+    db.set_user_attribute(user_id, "current_model", "gpt-4o-mini")
 
     db.start_new_dialog(user_id)
     await update.message.reply_text("Starting new dialog ✅")
@@ -688,7 +692,8 @@ def get_settings_menu(user_id: int):
 
     text += "\nSelect <b>model</b>:"
 
-    # buttons to choose models
+    # buttons to choose models (chunked into rows of 2 to stay within
+    # Telegram's per-row button limit as the model list grows)
     buttons = []
     for model_key in config.models["available_text_models"]:
         title = config.models["info"][model_key]["name"]
@@ -698,7 +703,9 @@ def get_settings_menu(user_id: int):
         buttons.append(
             InlineKeyboardButton(title, callback_data=f"set_settings|{model_key}")
         )
-    reply_markup = InlineKeyboardMarkup([buttons])
+
+    keyboard = [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
     return text, reply_markup
 
@@ -749,6 +756,11 @@ async def show_balance_handle(update: Update, context: CallbackContext):
 
     details_text = "🏷️ Details:\n"
     for model_key in sorted(n_used_tokens_dict.keys()):
+        # skip models that are no longer configured (e.g. removed legacy models
+        # a user spent tokens on in the past) to avoid a KeyError
+        if model_key not in config.models["info"]:
+            continue
+
         n_input_tokens, n_output_tokens = n_used_tokens_dict[model_key]["n_input_tokens"], n_used_tokens_dict[model_key]["n_output_tokens"]
         total_n_used_tokens += n_input_tokens + n_output_tokens
 
@@ -759,9 +771,9 @@ async def show_balance_handle(update: Update, context: CallbackContext):
         details_text += f"- {model_key}: <b>{n_input_spent_dollars + n_output_spent_dollars:.03f}$</b> / <b>{n_input_tokens + n_output_tokens} tokens</b>\n"
 
     # image generation
-    image_generation_n_spent_dollars = config.models["info"]["dalle-2"]["price_per_1_image"] * n_generated_images
+    image_generation_n_spent_dollars = config.models["info"]["gpt-image-1"]["price_per_1_image"] * n_generated_images
     if n_generated_images != 0:
-        details_text += f"- DALL·E 2 (image generation): <b>{image_generation_n_spent_dollars:.03f}$</b> / <b>{n_generated_images} generated images</b>\n"
+        details_text += f"- GPT Image (image generation): <b>{image_generation_n_spent_dollars:.03f}$</b> / <b>{n_generated_images} generated images</b>\n"
 
     total_n_spent_dollars += image_generation_n_spent_dollars
 
@@ -808,7 +820,7 @@ async def error_handle(update: Update, context: CallbackContext) -> None:
             except telegram.error.BadRequest:
                 # answer has invalid characters, so we send it without parse_mode
                 await context.bot.send_message(update.effective_chat.id, message_chunk)
-    except:
+    except Exception:
         await context.bot.send_message(update.effective_chat.id, "Some error in error handler")
 
 async def post_init(application: Application):

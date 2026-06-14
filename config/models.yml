@@ -1,99 +1,97 @@
-available_text_models: ["gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4-1106-preview", "gpt-4-vision-preview", "gpt-4", "text-davinci-003", "gpt-4o"]
+available_text_models: ["gpt-4o-mini", "openai/gpt-5.5", "gpt-4o", "anthropic/claude-opus-4.8", "anthropic/claude-sonnet-latest", "anthropic/claude-haiku-latest"]
 
 info:
-  gpt-3.5-turbo:
+  gpt-4o:
     type: chat_completion
-    name: ChatGPT
-    description: ChatGPT is that well-known model. It's <b>fast</b> and <b>cheap</b>. Ideal for everyday tasks. If there are some tasks it can't handle, try the <b>GPT-4</b>.
+    vision: true
+    name: GPT-4o
+    description: GPT-4o is a special variant of GPT-4 designed for optimal performance and accuracy. Suitable for complex and detailed tasks.
 
-    price_per_1000_input_tokens: 0.0015
-    price_per_1000_output_tokens: 0.002
+    price_per_1000_input_tokens: 0.0025
+    price_per_1000_output_tokens: 0.01
 
     scores:
-      Smart: 3
+      Smart: 5
+      Fast: 4
+      Cheap: 4
+
+  gpt-4o-mini:
+    type: chat_completion
+    vision: true
+    name: GPT-4o mini
+    description: GPT-4o mini is a <b>fast</b> and <b>affordable</b> small model. It's smarter and cheaper than GPT-3.5 Turbo and supports image understanding.
+
+    price_per_1000_input_tokens: 0.00015
+    price_per_1000_output_tokens: 0.0006
+
+    scores:
+      Smart: 4
       Fast: 5
       Cheap: 5
 
-  gpt-3.5-turbo-16k:
+  openai/gpt-5.5:
     type: chat_completion
-    name: GPT-16K
-    description: ChatGPT is that well-known model. It's <b>fast</b> and <b>cheap</b>. Ideal for everyday tasks. If there are some tasks it can't handle, try the <b>GPT-4</b>.
+    provider: openrouter
+    vision: true
+    name: GPT-5.5
+    description: GPT-5.5 is OpenAI's latest flagship model — the smartest option for complex reasoning and coding. Routed via <b>OpenRouter</b> (requires openrouter_api_key).
 
-    price_per_1000_input_tokens: 0.003
-    price_per_1000_output_tokens: 0.004
+    price_per_1000_input_tokens: 0.005
+    price_per_1000_output_tokens: 0.03
 
     scores:
-      Smart: 3
-      Fast: 5
-      Cheap: 5
+      Smart: 5
+      Fast: 3
+      Cheap: 2
 
-  gpt-4:
+  anthropic/claude-opus-4.8:
     type: chat_completion
-    name: GPT-4
-    description: GPT-4 is the <b>smartest</b> and most advanced model in the world. But it is slower and not as cost-efficient as ChatGPT. Best choice for <b>complex</b> intellectual tasks.
+    provider: openrouter
+    vision: true
+    name: Claude Opus 4.8
+    description: Anthropic's most capable model — top-tier reasoning, coding and long-context work. Routed via <b>OpenRouter</b> (requires openrouter_api_key).
 
-    price_per_1000_input_tokens: 0.03
-    price_per_1000_output_tokens: 0.06
+    price_per_1000_input_tokens: 0.005
+    price_per_1000_output_tokens: 0.025
 
     scores:
       Smart: 5
       Fast: 2
       Cheap: 2
 
-  gpt-4-1106-preview:
+  anthropic/claude-sonnet-latest:
     type: chat_completion
-    name: GPT-4 Turbo
-    description: GPT-4 Turbo is a <b>faster</b> and <b>cheaper</b> version of GPT-4. It's as smart as GPT-4, so you should use it instead of GPT-4.
+    provider: openrouter
+    vision: true
+    name: Claude Sonnet
+    description: Anthropic's balanced model — strong quality with good speed and price. Routed via <b>OpenRouter</b> (requires openrouter_api_key).
 
-    price_per_1000_input_tokens: 0.01
-    price_per_1000_output_tokens: 0.03
-
-    scores:
-      smart: 5
-      fast: 4
-      cheap: 3
-
-  gpt-4-vision-preview:
-    type: chat_completion
-    name: GPT-4 Vision
-    description: Ability to <b>understand images</b>, in addition to all other GPT-4 Turbo capabilties.
-
-    price_per_1000_input_tokens: 0.01
-    price_per_1000_output_tokens: 0.03
+    price_per_1000_input_tokens: 0.003
+    price_per_1000_output_tokens: 0.015
 
     scores:
-      smart: 5
-      fast: 4
-      cheap: 3
-  gpt-4o:
-    type: chat_completion
-    name: GPT-4o
-    description: GPT-4o is a special variant of GPT-4 designed for optimal performance and accuracy. Suitable for complex and detailed tasks.
-
-    price_per_1000_input_tokens: 0.03
-    price_per_1000_output_tokens: 0.06
-
-    scores:
-      smart: 5
-      fast: 2
-      cheap: 2
-
-  text-davinci-003:
-    type: completion
-    name: GPT-3.5
-    description: GPT-3.5 is a legacy model. Actually there is <b>no reason to use it</b>, because it is more expensive and slower than ChatGPT, but just about as smart.
-
-    price_per_1000_input_tokens: 0.02
-    price_per_1000_output_tokens: 0.02
-
-    scores:
-      Smart: 3
-      Fast: 2
+      Smart: 5
+      Fast: 4
       Cheap: 3
 
-  dalle-2:
+  anthropic/claude-haiku-latest:
+    type: chat_completion
+    provider: openrouter
+    vision: true
+    name: Claude Haiku
+    description: Anthropic's fastest and most affordable model for everyday tasks. Routed via <b>OpenRouter</b> (requires openrouter_api_key).
+
+    price_per_1000_input_tokens: 0.001
+    price_per_1000_output_tokens: 0.005
+
+    scores:
+      Smart: 4
+      Fast: 5
+      Cheap: 4
+
+  gpt-image-1:
      type: image
-     price_per_1_image: 0.018  # 512x512
+     price_per_1_image: 0.042  # 1024x1024, medium quality
 
   whisper:
     type: audio

@@ -1,113 +1,170 @@
-# ChatGPT Telegram Bot: **GPT-4. Fast. No daily limits. Special chat modes**
-
 <div align="center">
+
 <img src="https://raw.githubusercontent.com/karfly/chatgpt_telegram_bot/main/static/header.png" align="center" style="width: 100%" />
+
+# 🤖 ChatGPT Telegram Bot
+
+**ChatGPT, re-created as a Telegram bot — and it works great.**
+
+GPT-5.5 · Anthropic Claude (Opus / Sonnet / Haiku) · Vision · Voice · Image generation
+<br/>Fast replies, no daily limits, message streaming and 15 special chat modes.
+
+<p align="center">
+<a href="https://t.me/jadvebot?start=source=github" alt="Run Telegram Bot"><img src="https://img.shields.io/badge/RUN-Telegram%20Bot-blue?logo=telegram" /></a>
+<img src="https://img.shields.io/badge/python-3.12-blue?logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white" />
+<img src="https://img.shields.io/badge/license-MIT-green" />
+<img src="https://img.shields.io/badge/version-1.3.0-orange" />
+</p>
+
+<p align="center">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmM2ZWVjY2M4NWQ3ZThkYmQ3MDhmMTEzZGUwOGFmOThlMDIzZGM4YiZjdD1n/unx907h7GSiLAugzVX/giphy.gif" width="600" />
+</p>
+
 </div>
-
-<br>
-
-<p align="center">
-<a href="https://t.me/chatgpt_karfly_bot?start=source=github" alt="Run Telegram Bot shield"><img src="https://img.shields.io/badge/RUN-Telegram%20Bot-blue?logo=data:image/svg+xml;base64,PHN2ZyBpZD0iTGl2ZWxsb18xIiBkYXRhLW5hbWU9IkxpdmVsbG8gMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmlld0JveD0iMCAwIDI0MCAyNDAiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB4MT0iMTIwIiB5MT0iMjQwIiB4Mj0iMTIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWQ5M2QyIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzhiMGUzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPlRlbGVncmFtX2xvZ288L3RpdGxlPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjEyMCIgcj0iMTIwIiBmaWxsPSJ1cmwoI2xpbmVhci1ncmFkaWVudCkiLz48cGF0aCBkPSJNODEuMjI5LDEyOC43NzJsMTQuMjM3LDM5LjQwNnMxLjc4LDMuNjg3LDMuNjg2LDMuNjg3LDMwLjI1NS0yOS40OTIsMzAuMjU1LTI5LjQ5MmwzMS41MjUtNjAuODlMODEuNzM3LDExOC42WiIgZmlsbD0iI2M4ZGFlYSIvPjxwYXRoIGQ9Ik0xMDAuMTA2LDEzOC44NzhsLTIuNzMzLDI5LjA0NnMtMS4xNDQsOC45LDcuNzU0LDAsMTcuNDE1LTE1Ljc2MywxNy40MTUtMTUuNzYzIiBmaWxsPSIjYTljNmQ4Ii8+PHBhdGggZD0iTTgxLjQ4NiwxMzAuMTc4LDUyLjIsMTIwLjYzNnMtMy41LTEuNDItMi4zNzMtNC42NGMuMjMyLS42NjQuNy0xLjIyOSwyLjEtMi4yLDYuNDg5LTQuNTIzLDEyMC4xMDYtNDUuMzYsMTIwLjEwNi00NS4zNnMzLjIwOC0xLjA4MSw1LjEtLjM2MmEyLjc2NiwyLjc2NiwwLDAsMSwxLjg4NSwyLjA1NSw5LjM1Nyw5LjM1NywwLDAsMSwuMjU0LDIuNTg1Yy0uMDA5Ljc1Mi0uMSwxLjQ0OS0uMTY5LDIuNTQyLS42OTIsMTEuMTY1LTIxLjQsOTQuNDkzLTIxLjQsOTQuNDkzcy0xLjIzOSw0Ljg3Ni01LjY3OCw1LjA0M0E4LjEzLDguMTMsMCwwLDEsMTQ2LjEsMTcyLjVjLTguNzExLTcuNDkzLTM4LjgxOS0yNy43MjctNDUuNDcyLTMyLjE3N2ExLjI3LDEuMjcsMCwwLDEtLjU0Ni0uOWMtLjA5My0uNDY5LjQxNy0xLjA1LjQxNy0xLjA1czUyLjQyNi00Ni42LDUzLjgyMS01MS40OTJjLjEwOC0uMzc5LS4zLS41NjYtLjg0OC0uNC0zLjQ4MiwxLjI4MS02My44NDQsMzkuNC03MC41MDYsNDMuNjA3QTMuMjEsMy4yMSwwLDAsMSw4MS40ODYsMTMwLjE3OFoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" width="230"/></a>
-</p>
-
-
-We all love [chat.openai.com](https://chat.openai.com), but... It's TERRIBLY laggy, has daily limits, and is only accessible through an archaic web interface.
-
-This repo is ChatGPT re-created as Telegram Bot. **And it works great.**
-
-You can deploy your own bot, or use mine: [@jadvebot](https://t.me/jadvebot) (Our web: https://jadve.com)
-
-## Features
-- Low latency replies (it usually takes about 3-5 seconds)
-- No request limits
-- Message streaming (watch demo)
-- GPT-4 and GPT-4 Turbo support
-- GPT-4 Vision support
-- Group Chat support (/help_group_chat to get instructions)
-- DALLE 2 (choose 👩‍🎨 Artist mode to generate images)
-- Voice message recognition
-- Code highlighting
-- 15 special chat modes: 👩🏼‍🎓 Assistant, 👩🏼‍💻 Code Assistant, 👩‍🎨 Artist, 🧠 Psychologist, 🚀 Elon Musk and other. You can easily create your own chat modes by editing `config/chat_modes.yml`
-- Support of [ChatGPT API](https://platform.openai.com/docs/guides/chat/introduction)
-- List of allowed Telegram users
-- Track $ balance spent on OpenAI API
-
-<p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmM2ZWVjY2M4NWQ3ZThkYmQ3MDhmMTEzZGUwOGFmOThlMDIzZGM4YiZjdD1n/unx907h7GSiLAugzVX/giphy.gif" />
-</p>
 
 ---
 
-## News
-- *21 Apr 2023*:
-    - DALLE 2 support
-    - Group Chat support (/help_group_chat to get instructions)
-    - 10 new hot chat modes and updated chat mode menu with pagination: 🇬🇧 English Tutor, 🧠 Psychologist, 🚀 Elon Musk, 📊 SQL Assistant and other.
-- *24 Mar 2023*: GPT-4 support. Run `/settings` command to choose model
-- *15 Mar 2023*: Added message streaming. Now you don't have to wait until the whole message is ready, it's streamed to Telegram part-by-part (watch demo)
-- *9 Mar 2023*: Now you can easily create your own Chat Modes by editing `config/chat_modes.yml`
-- *8 Mar 2023*: Added voice message recognition with [OpenAI Whisper API](https://openai.com/blog/introducing-chatgpt-and-whisper-apis). Record a voice message and ChatGPT will answer you!
-- *2 Mar 2023*: Added support of [ChatGPT API](https://platform.openai.com/docs/guides/chat/introduction).
-- *1 Aug 2023*: Added OpenAI API Base to config (useful while using OpenAI-compatible API like [LocalAI](https://github.com/go-skynet/LocalAI))
-- *15 Nov 2023*: Added support of [GPT-4 Turbo](https://help.openai.com/en/articles/8555510-gpt-4-turbo)
-- *2 Apt 2024*: Added [GPT-4 Vision](https://platform.openai.com/docs/guides/vision) support
+Web chatbots are great — but they're often laggy, rate-limited, and locked behind a browser tab. This project puts the best models from **OpenAI and Anthropic** **right inside Telegram**, with your own API keys and no daily limits.
 
-## Bot commands
-- `/retry` – Regenerate last bot answer
-- `/new` – Start new dialog
-- `/mode` – Select chat mode
-- `/balance` – Show balance
-- `/settings` – Show settings
-- `/help` – Show help
+🚀 **Try the live bot:** [@jadvebot](https://t.me/jadvebot) · 🌐 Web: [jadve.com](https://jadve.com) — or deploy your own in two commands ([Quick start ↓](#-quick-start)).
 
-## Setup
-1. Get your [OpenAI API](https://openai.com/api/) key
+## ✨ Features
 
-2. Get your Telegram bot token from [@BotFather](https://t.me/BotFather)
+- ⚡ **Low latency** — replies usually take 3–5 seconds.
+- 🔁 **No request limits** — you pay your API provider directly, nothing in between.
+- 📝 **Message streaming** — answers stream into Telegram word-by-word.
+- 🧠 **Frontier models** — **GPT-5.5** and **Anthropic Claude** (Opus 4.8 / Sonnet / Haiku) via [OpenRouter](https://openrouter.ai/), plus fast & cheap defaults out of the box.
+- 👁️ **Vision** — send an image and any vision-capable model (GPT-5.5, Claude, …) will read it.
+- 🎨 **Image generation** — create images with OpenAI `gpt-image-1` (switch to 👩‍🎨 *Artist* mode).
+- 🎤 **Voice messages** — record a voice note and Whisper transcribes it for you.
+- 🎭 **15 chat modes** — Assistant, Code Assistant, Psychologist, Elon Musk and more. Add your own in `config/chat_modes.yml`.
+- 👥 **Group chat support** — run `/help_group_chat` for setup instructions.
+- 💻 **Code highlighting** — formatted, readable code blocks.
+- 🔒 **Access control** — restrict the bot to a list of allowed Telegram users.
+- 💰 **Balance tracking** — see exactly how much you've spent on the API with `/balance`.
 
-3. Edit `config/config.example.yml` to set your tokens and run 2 commands below (*if you're advanced user, you can also edit* `config/config.example.env`):
-    ```bash
-    mv config/config.example.yml config/config.yml
-    mv config/config.example.env config/config.env
-    ```
+## 🧠 Supported models
 
-4. 🔥 And now **run**:
-    ```bash
-    docker-compose --env-file config/config.env up --build
-    ```
+Models are config-driven — add or remove any in [`config/models.yml`](config/models.yml) with **no code changes**.
+
+| Model | Provider | Vision | Smart | Fast | Cheap | In / Out per 1K tokens |
+|---|---|:---:|:---:|:---:|:---:|---|
+| **GPT-4o mini** *(default)* | OpenAI | ✅ | 🟢🟢🟢🟢 | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢🟢 | $0.00015 / $0.0006 |
+| **GPT-4o** | OpenAI | ✅ | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢 | 🟢🟢🟢🟢 | $0.0025 / $0.01 |
+| **GPT-5.5** | OpenRouter | ✅ | 🟢🟢🟢🟢🟢 | 🟢🟢🟢 | 🟢🟢 | $0.005 / $0.03 |
+| **Claude Opus 4.8** | OpenRouter | ✅ | 🟢🟢🟢🟢🟢 | 🟢🟢 | 🟢🟢 | $0.005 / $0.025 |
+| **Claude Sonnet** | OpenRouter | ✅ | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢 | 🟢🟢🟢 | $0.003 / $0.015 |
+| **Claude Haiku** | OpenRouter | ✅ | 🟢🟢🟢🟢 | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢 | $0.001 / $0.005 |
+
+Plus `gpt-image-1` for image generation and **Whisper** for voice transcription.
+
+> 💡 OpenAI models use the native API. Claude and GPT-5.5 are routed through [OpenRouter](https://openrouter.ai/) — just set `openrouter_api_key` and pick the model in `/settings`. Any other OpenRouter-routed model works too: declare `provider: openrouter` in `config/models.yml`.
+
+## 🎭 Chat modes
+
+| | | |
+|---|---|---|
+| 👩🏼‍🎓 General Assistant | 👩🏼‍💻 Code Assistant | 👩‍🎨 Artist |
+| 🇬🇧 English Tutor | 💡 Startup Idea Generator | 📝 Text Improver |
+| 🧠 Psychologist | 🚀 Elon Musk | 🌟 Motivator |
+| 💰 Money Maker | 📊 SQL Assistant | 🧳 Travel Guide |
+| 🥒 Rick Sanchez | 🧮 Accountant | 🎬 Movie Expert |
+
+Create your own by editing [`config/chat_modes.yml`](config/chat_modes.yml).
+
+## 🚀 Quick start
+
+**1.** Get an [OpenAI API key](https://openai.com/api/).
+
+**2.** *(optional)* Get an [OpenRouter API key](https://openrouter.ai/keys) to use **Claude** and **GPT-5.5**.
+
+**3.** Get a Telegram bot token from [@BotFather](https://t.me/BotFather).
+
+**4.** Fill in your tokens and rename the config files:
+
+```bash
+mv config/config.example.yml config/config.yml
+mv config/config.example.env config/config.env
+# then edit config/config.yml — set telegram_token, openai_api_key (and openrouter_api_key for Claude/GPT-5.5)
+```
+
+**5.** 🔥 Run it:
+
+```bash
+docker-compose --env-file config/config.env up --build
+```
+
+That's it — message your bot on Telegram.
+
+## ⚙️ Configuration
+
+Main options in `config/config.yml`:
+
+| Option | Description |
+|---|---|
+| `telegram_token` | Bot token from [@BotFather](https://t.me/BotFather) |
+| `openai_api_key` | Your OpenAI API key |
+| `openai_api_base` | Custom base URL (e.g. [LocalAI](https://github.com/go-skynet/LocalAI)); leave `null` for default |
+| `openrouter_api_key` | Needed only for `provider: openrouter` models (Claude, GPT-5.5) |
+| `allowed_telegram_usernames` | Whitelist of users/IDs; empty = open to everyone |
+| `new_dialog_timeout` | Seconds before a new dialog starts automatically |
+| `image_size` | `gpt-image-1` output size (`1024x1024`, `1536x1024`, `1024x1536`, `auto`) |
+| `enable_message_streaming` | Stream answers word-by-word |
+
+Per-model pricing and capabilities live in [`config/models.yml`](config/models.yml).
+
+## 💬 Bot commands
+
+| Command | Description |
+|---|---|
+| `/new` | Start a new dialog |
+| `/mode` | Select a chat mode |
+| `/retry` | Regenerate the last answer |
+| `/settings` | Choose model and settings |
+| `/balance` | Show $ spent on the API |
+| `/help` | Show help |
+
+## 🗂️ Project structure
+
+```
+bot/
+  bot.py           # Telegram handlers, streaming, commands
+  openai_utils.py  # model dispatch (OpenAI + OpenRouter), token counting, vision
+  config.py        # loads config.yml / models.yml / chat_modes.yml
+  database.py      # MongoDB storage for users & dialogs
+config/
+  config.yml       # your tokens & settings
+  models.yml       # model catalog, pricing, capabilities
+  chat_modes.yml   # chat-mode prompts
+```
+
+## 🛠️ Tech stack
+
+[python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) 20.x · [OpenAI Python SDK](https://github.com/openai/openai-python) 1.x · MongoDB · Docker · Python 3.12
+
+## 📰 Changelog highlights
+
+- **Jun 2026** — Switched image generation to **gpt-image-1**, refreshed the model menu and pricing.
+- **Mar 2026** — Added [OpenRouter](https://openrouter.ai/) support → **Claude** (Opus / Sonnet / Haiku) and **GPT-5.5**.
+- **Feb 2026** — Migrated to the OpenAI Python 1.x SDK; Docker now runs on Python 3.12.
+- **2025** — Config-driven model catalog: add or swap models without touching code.
+
+See the full history in [CHANGELOG.md](CHANGELOG.md).
 
 ## ❤️ Top donations
-You can be in this list:
 
-1. [LilRocco](https://t.me/LilRocco). Donation: **11000$** (!!!)
+You can be on this list:
 
-1. [Mr V](https://t.me/mr_v_v_v). Donation **250$**
+1. [LilRocco](https://t.me/LilRocco) — **$11000** (!!!)
+2. [Mr V](https://t.me/mr_v_v_v) — **$250**
+3. [unexpectedsunday](https://t.me/unexpectedsunday) — **$150**
 
-1. [unexpectedsunday](https://t.me/unexpectedsunday). Donation: **150$**
+## 📄 License
 
-1. [Sem](https://t.me/sembrestels). Donation: **100$**
+[MIT](LICENSE) — do whatever you want, just keep the notice.
 
-1. [Miksolo](https://t.me/Miksolo). Donation: **81$**
-
-    *Message:* Thank you. Using this docker container every day! Actually created the same project but its good to see that this one is being supported often. Will continue using it! Good architecture choices made in the code 💪!
-
-1. [Ryo](https://t.me/ryokihara). Donation: **80$**
-
-1. [Ilias Ism](https://twitter.com/illyism). Donation: **69$**
-
-    *Message:* I wanted to thank you for your amazing code! It helped me start my own Telegram ChatGPT bot and add a bunch of cool features. I really appreciate your hard work on this project. For anyone interested in trying my bot, feel free to check it out here: [magicbuddy.chat](https://magicbuddy.chat) 🤖 Thanks again! 😊
-
-1. [Sebastian](https://t.me/dell1503). Donation: **55$**
-
-1. [Alexander Zimin](https://t.me/azimin). Donation: **50$**
-
-1. [Kbaji20](https://t.me/Kbaji20). Donation: **30$**
-
-1. [Hans Blinken](https://t.me/hblink). Donation: **10$**
-
-## Contributors
-- Main contributor: @karfly
-- [Jadve AI](https://jadve.com).
-
-## References
-1. [*Build ChatGPT from GPT-3*](https://learnprompting.org/docs/applied_prompting/build_chatgpt)
+<div align="center">
+<br/>
+⭐ <b>If this project saved you time, give it a star!</b> ⭐
+</div>

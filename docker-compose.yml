@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   mongo:
     container_name: mongo
@@ -18,6 +16,9 @@ services:
     build:
       context: "."
       dockerfile: Dockerfile
+    volumes:
+      # live-mount config so edits apply on restart without rebuilding
+      - ./config:/code/config
     depends_on:
       - mongo
 
